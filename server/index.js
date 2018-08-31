@@ -34,9 +34,9 @@ app.get('/auth/callback', async (req, res) => {
             client_secret: process.env.VUE_APP_AUTH0_CLIENT_SECRET,
             code: req.query.code,
             grant_type: 'authorization_code',
-            redirect_uri: `${PROTOCOL}://${req.headers.host}/auth/callback`
+            redirect_uri: `${PROTOCOL}://localhost:8080/auth/callback`
         };
-       
+        // req.headers.host
     //----get token---//
     
         let receiveToken = await axios.post(`https://${process.env.VUE_APP_AUTH0_DOMAIN}/oauth/token`, payload).catch(error => {

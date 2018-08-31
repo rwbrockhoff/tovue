@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store ({
     state: {
-        list: [],
-        gurgle: ''
+        list: [], 
+        displayList: {}
     },
     mutations: {
         ADD_ITEM: (state, item) => {

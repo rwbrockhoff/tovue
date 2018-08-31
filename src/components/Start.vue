@@ -13,7 +13,6 @@ export default {
     ]),
     methods: {
         login(){
-            // this.$router.push('/akt')
             let {VUE_APP_AUTH0_DOMAIN,
                 VUE_APP_AUTH0_CLIENT_ID
             } = process.env;
