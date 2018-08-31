@@ -1,21 +1,23 @@
-# todolist
+# Akt List
+[Live-Site](https://www.aktlist.com)
 
-## Project setup
-```
-npm install
-```
+Akt List is a minimalist design todo list, using Vue, Vuex, and Bootstrap. Akt List was created to show enthusiam towards different technologies. This project is still in progress as of August 2018.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Built With
 
-### Compiles and minifies for production
-```
-npm run build
-```
+* [Vue](https://vuejs.org/) - Javascript Framework
+* [Vuex](https://vuex.vuejs.org/) - Vue's state management pattern
+* [Bootstrap](https://getbootstrap.com/) - Open Source Toolkit
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Technologies
+
+Vue | Vue-Router | Vuex | Bootstrap | Node | Express | Postgres
+
+## Authors
+
+* **Ryan Brockhoff** 
+
+## License
+Copyright © Ryan Brockhoff
+
+

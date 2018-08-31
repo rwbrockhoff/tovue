@@ -2,9 +2,10 @@
 .DS_Store
 node_modules
 
+
+# local env files
 .env
 .env.prod
-# local env files
 .env.local
 .env.*.local
 /dist
