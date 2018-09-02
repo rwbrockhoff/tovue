@@ -28,7 +28,7 @@ export default {
     }
   },
   computed: mapState([
-    'displayList'
+    'displayList, displayName'
   ]),
   methods: {
     ...mapMutations([
@@ -57,8 +57,10 @@ export default {
         this.list.splice(obj.val.completed, 1)
       }
       else if(obj.val.delete >= 0){
+        let list = this.$store.state.displayName
         let id = obj.val.delete
-        axios.delete(`/api/delete/${id}`).then(() => {
+        
+        axios.delete(`/api/${list}/${id}`).then(() => {
           this.deleteItem(id)
         })
       }

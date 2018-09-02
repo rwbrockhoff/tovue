@@ -80,11 +80,12 @@ app.post('/api/addtodo', (req, res) => {
     
 })
 
-app.delete('/api/delete/:id', (req, res) => {
+app.delete('/api/:list/:id', (req, res) => {
     const dbInstance = req.app.get('db')
     const {sub} = req.session.user
-    const {id} = req.params
-    dbInstance.deletetodo([sub, id]).then(() => {
+    const {list, id} = req.params
+
+    dbInstance.deletetodo([sub, id, list]).then(() => {
         res.sendStatus(200)
     })
     
