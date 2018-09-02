@@ -6,6 +6,7 @@
     </div>
     <div class='side'>
     <Sidebar :user='user'/>
+    
     </div>
   </div>
 
@@ -27,14 +28,17 @@ export default {
     }
   },
   computed: mapState([
-    'list'
+    'displayList'
   ]),
   methods: {
     ...mapMutations([
-      'ADD_LIST'
+      'ADD_LIST', 'DELETE_ITEM'
     ]),
     addList: function(list){
       this.ADD_LIST(list)
+    },
+    deleteItem: function(id){
+      this.DELETE_ITEM(id)
     },
     add(item){
       this.list.push({todo: item.item})
@@ -42,7 +46,6 @@ export default {
   
     },
     handle(obj){
-      
       if(obj.val.index >= 0){
         
       var newItem = this.list.slice(obj.val.index, ++obj.val.index)
@@ -54,9 +57,10 @@ export default {
         this.list.splice(obj.val.completed, 1)
       }
       else if(obj.val.delete >= 0){
-        var id = this.list[obj.val.delete].todo_id
-        axios.delete(`/api/delete/${id}`)
-        this.list.splice(obj.val.delete, 1)
+        let id = obj.val.delete
+        axios.delete(`/api/delete/${id}`).then(() => {
+          this.deleteItem(id)
+        })
       }
     }
   },
@@ -66,8 +70,8 @@ export default {
   mounted: function(){
     axios.get('api/user').then(info => {
       this.user = info.data.user
-      axios.get('/api/getitems').then(list => {
-        this.addList(list.data)
+      axios.get('/api/getitems').then(lists => {
+        this.addList(lists.data[0].items)
       })
     })
     if (!user.sub){

@@ -63,7 +63,8 @@ app.get('/api/user', (req, res) => {
 app.get('/api/getitems', (req, res) => {
     const dbInstance = req.app.get('db')
     const {sub} = req.session.user
-    dbInstance.getitems(sub).then(item => {
+    
+    dbInstance.getitems(sub).then(item => {   
         res.status(200).send(item)
     })
 })
@@ -71,9 +72,10 @@ app.get('/api/getitems', (req, res) => {
 app.post('/api/addtodo', (req, res) => {
     const dbInstance = req.app.get('db')
     const {sub} = req.session.user;
-    const {item} = req.body;
-    dbInstance.addtodo([sub, item]).then(resp => {
-        res.status(200).send(resp)
+    const {item, list} = req.body;
+
+    dbInstance.addtodo([sub, item, list]).then(resp => {
+        res.sendStatus(200)
     })
     
 })
@@ -82,7 +84,9 @@ app.delete('/api/delete/:id', (req, res) => {
     const dbInstance = req.app.get('db')
     const {sub} = req.session.user
     const {id} = req.params
-    dbInstance.deletetodo([sub, id])
+    dbInstance.deletetodo([sub, id]).then(() => {
+        res.sendStatus(200)
+    })
     
     
 })

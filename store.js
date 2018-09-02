@@ -5,16 +5,25 @@ Vue.use(Vuex)
 
 export default new Vuex.Store ({
     state: {
-        list: [], 
-        displayList: {}
+        inbox: {},
+        inboxcomp: {},
+        displayList: {},
+        displayCompleted: {},
+        displayName: '',
+        displayNameCompleted: ''
     },
     mutations: {
         ADD_ITEM: (state, item) => {
-            state.gurgle = 'runner'
-            state.list.push(item)
+            state.displayList.push(item)
+        },
+        DELETE_ITEM: (state, id) => {
+            state.displayList.splice(id, 1)
         },
         ADD_LIST: (state, payload) => {
-            state.list = [...payload]
+            state.inbox = payload
+            state.displayList = [...state.inbox]
+            state.displayName = 'inbox'
+            state.displayNameCompleted = 'inboxcomp'
         }
     },
     actions: {

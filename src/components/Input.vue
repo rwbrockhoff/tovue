@@ -3,13 +3,12 @@
     <li>
     <input class='addtask' v-model='item' placeholder='Add a task...' @keyup.enter='addItem'/>
     </li>
-    
 </div>
 </template>
 
 <script>
 import axios from 'axios'
-import {mapMutations} from 'vuex';
+import {mapState, mapMutations} from 'vuex';
 
 export default {
 
@@ -18,10 +17,13 @@ export default {
             item: ''
         }
     },
+    computed: mapState([
+        'displayName', 'displayNameCompleted'
+    ]),
     methods: {
         submit(){
             if(this.item !== ''){
-                this.$emit('clicked', {item: this.item})
+                this.$emit('clicked', {item: this.item, list: this.$store.state.displayName})
 
                 this.item = ''
             }
@@ -34,9 +36,12 @@ export default {
             'ADD_ITEM'
         ]),
         addItem: function(){
-            axios.post("/api/addtodo", {item: this.item}).then(item => {
-                this.ADD_ITEM(item.data[0])
-            }) 
+            let list = this.$store.state.displayName
+            let item = this.item
+            axios.post("/api/addtodo", {item: item, list: list}).then(() => {
+                console.log('itema: ', item)
+                this.ADD_ITEM(item)
+            })
             this.item = ''
         }
     }

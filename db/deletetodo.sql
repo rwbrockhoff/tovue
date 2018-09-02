@@ -1,3 +1,3 @@
-delete from todolist
-where user_id=$1
-and todo_id=$2;
+update todolist
+set items = (select array_remove(items, items[$2 + 1]) from todolist)
+where user_id=$1;

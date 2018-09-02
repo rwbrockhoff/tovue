@@ -1,11 +1,11 @@
 <template>
 <div>
    
-    <div v-for='(todo, i) in list' :key='todo.todo_id'> 
+    <div v-for='(todo, i) in displayList' :key='i+5'> 
 
        <li class="todoitem"> 
            <input class='checkitem' name='check' type='checkbox' @click='star({completed: i})'/> 
-           {{todo.todo}} 
+           {{todo}} 
            <div class='btncontainer'>
            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
            <button class="btn btn-light" @click='star({index: i})'> <i class="far fa-star"/> </button>
@@ -18,13 +18,13 @@
 
     <br/>
     <button class="btn btn-light btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
-    v-if='completed[0]'>
+    v-if='displayCompleted[0]'>
     Completed &thinsp;
-    <span class="badge badge-primary">{{completed.length}}</span> 
+    <span class="badge badge-primary">{{displayCompleted.length}}</span> 
   </button>
    <br/><br/>
     <div class="collapse" id="collapseExample">
-        <div class='completed' v-for='(item) in completed' :key='item.todo_id'>
+        <div class='completed' v-for='(item) in displayCompleted' :key='item.todo_id'>
             <li class='completeitem'>
                 {{item.todo}}
              </li>
@@ -39,7 +39,7 @@ import {mapState} from 'vuex'
 export default {
     name: 'List',
     computed: mapState([
-        'list'
+        'displayList', 'displayCompleted'
     ]),
     props: ['completed'],
     methods: {

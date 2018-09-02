@@ -1,2 +1,2 @@
-select todo, todo_id, category from todolist
-where user_id=$1
+select list, items from todolist
+where user_id=$1 and list = 'inbox';
