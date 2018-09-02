@@ -64,8 +64,8 @@ app.get('/api/getitems', (req, res) => {
     const dbInstance = req.app.get('db')
     const {sub} = req.session.user
     
-    dbInstance.getitems(sub).then(item => {   
-        res.status(200).send(item)
+    dbInstance.getitems(sub).then(lists => {   
+        res.status(200).send(lists)
     })
 })
 

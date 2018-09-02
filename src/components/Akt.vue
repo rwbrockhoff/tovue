@@ -71,7 +71,7 @@ export default {
     axios.get('api/user').then(info => {
       this.user = info.data.user
       axios.get('/api/getitems').then(lists => {
-        this.addList(lists.data[0].items)
+        this.addList(lists.data)
       })
     })
     if (!user.sub){

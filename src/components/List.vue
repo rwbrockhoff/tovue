@@ -26,7 +26,7 @@
     <div class="collapse" id="collapseExample">
         <div class='completed' v-for='(item) in displayCompleted' :key='item.todo_id'>
             <li class='completeitem'>
-                {{item.todo}}
+                {{item}}
              </li>
         </div>
     </div>
