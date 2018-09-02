@@ -86,7 +86,7 @@ export default {
 <style>
 div.outerkt {
   display: flex;
-
+  overflow-y: scroll;
 }
 #akt {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -94,11 +94,12 @@ div.outerkt {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   padding: 3vh 2vw;
-  height: 90vh;
+  height: 100vh;
   width: 85vw;
   position: fixed;
   right: 0;
   top: 5px;
+   overflow-y: scroll;
 }
 
 

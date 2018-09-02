@@ -72,8 +72,8 @@ li.completeitem {
 }
 
 div.btncontainer {
-    position: fixed;
-    right: 6vw;
+    position: absolute;
+    right: 5vw;
 }
 input.checkitem {
    margin-left: 5px;
