@@ -9,7 +9,8 @@ export default new Vuex.Store ({
         displayList: {},
         displayCompleted: {},
         displayName: '',
-        displayNameCompleted: ''
+        displayNameCompleted: '',
+        sidebarList: []
     },
     mutations: {
         ADD_ITEM: (state, item) => {
@@ -19,10 +20,13 @@ export default new Vuex.Store ({
             state.displayList.splice(id, 1)
         },
         ADD_LIST: (state, payload) => {
-            payload.forEach(element => {
+            payload.forEach((element, index) => {
                 let name = element.list
                 let load = element.items
                 state.lists[name] = load
+                if(element.list.indexOf('_comp')===-1){
+                    state.sidebarList.push(name)
+                }   
             })
             state.displayList = state.lists.inbox
             state.displayCompleted = state.lists.inbox_comp

@@ -28,7 +28,7 @@ export default {
     }
   },
   computed: mapState([
-    'displayList, displayName'
+    'displayList', 'displayName'
   ]),
   methods: {
     ...mapMutations([
