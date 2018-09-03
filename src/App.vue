@@ -19,7 +19,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   padding: 3vh 2vw;
-  background-image: linear-gradient(#F0A202, #FF830F);
+  background-image: linear-gradient(#F0A202, #F55);
   height: 100vh;
 }
 </style>
