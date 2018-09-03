@@ -58,11 +58,12 @@ div.lists {
 p.listmenuitem {
     width: 100%;
     height: 50px;
+    font-weight: 700;
+    margin: -15px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: 700;
-    margin: 0px 0px;
+       
 }
 
 p.listmenuitem:hover {
