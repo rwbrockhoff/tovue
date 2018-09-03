@@ -49,7 +49,7 @@ export default {
   
     },
     handle(obj){
-     
+       console.log(obj)
       if(obj.val.index >= 0){
       var newItem = this.list.slice(obj.val.index, ++obj.val.index)
       this.list.splice(--obj.val.index, 1)
