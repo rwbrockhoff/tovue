@@ -28,6 +28,10 @@ export default new Vuex.Store ({
             state.displayCompleted = state.lists.inbox_comp
             state.displayName = 'inbox'
             state.displayNameCompleted = 'inbox_comp'
+        },
+        COMPLETE_ITEM: (state, payload) => {
+            state.displayList.splice(payload.id, 1)
+            state.displayCompleted.push(payload.item)
         }
     },
     actions: {

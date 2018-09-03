@@ -32,7 +32,7 @@ export default {
   ]),
   methods: {
     ...mapMutations([
-      'ADD_LIST', 'DELETE_ITEM'
+      'ADD_LIST', 'DELETE_ITEM', 'COMPLETE_ITEM'
     ]),
     addList: function(list){
       this.ADD_LIST(list)
@@ -40,21 +40,29 @@ export default {
     deleteItem: function(id){
       this.DELETE_ITEM(id)
     },
+    completeItem: function(obj){
+      this.COMPLETE_ITEM(obj)
+    },
     add(item){
       this.list.push({todo: item.item})
       axios.post("/api/addtodo", {item: item.item})
   
     },
     handle(obj){
+     
       if(obj.val.index >= 0){
-        
       var newItem = this.list.slice(obj.val.index, ++obj.val.index)
       this.list.splice(--obj.val.index, 1)
       this.list.unshift(newItem[0])
       }
       else if(obj.val.completed >= 0){
-         this.completed.push(this.list[obj.val.completed])
-        this.list.splice(obj.val.completed, 1)
+        let list = this.$store.state.displayName
+        let item = this.$store.state.displayList[obj.val.completed]
+        let id = obj.val.completed
+        var e = document.getElementsByClassName('checkitem')[id]
+        e.checked = false;
+        axios.put('/api/completetodo', {id: id, item: item, list: list})
+        this.completeItem({id: id, item: item})
       }
       else if(obj.val.delete >= 0){
         let list = this.$store.state.displayName
