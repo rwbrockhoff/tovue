@@ -6,10 +6,10 @@ Vue.use(Vuex)
 export default new Vuex.Store ({
     state: {
         lists:{},
+        complists:{},
         displayList: {},
         displayCompleted: {},
         displayName: '',
-        displayNameCompleted: '',
         sidebarList: []
     },
     mutations: {
@@ -23,15 +23,19 @@ export default new Vuex.Store ({
             payload.forEach((element, index) => {
                 let name = element.list
                 let load = element.items
+                let compload = element.itemscompleted
                 state.lists[name] = load
-                if(element.list.indexOf('_comp')===-1){
-                    state.sidebarList.push(name)
-                }   
+                state.complists[name] = compload
+                state.sidebarList.push(name)
             })
             state.displayList = state.lists.inbox
-            state.displayCompleted = state.lists.inbox_comp
+            state.displayCompleted = state.complists.inbox
             state.displayName = 'inbox'
-            state.displayNameCompleted = 'inbox_comp'
+        },
+        CHANGE_LIST: (state, payload) => {
+            state.displayList = state.lists[payload]
+            state.displayCompleted = state.complists[payload]
+            state.displayName = payload.toString()
         },
         COMPLETE_ITEM: (state, payload) => {
             state.displayList.splice(payload.id, 1)

@@ -18,7 +18,7 @@ export default {
         }
     },
     computed: mapState([
-        'displayName', 'displayNameCompleted'
+        'displayName'
     ]),
     methods: {
         submit(){

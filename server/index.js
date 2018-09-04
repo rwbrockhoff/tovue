@@ -96,8 +96,7 @@ app.put('/api/completetodo', (req, res) => {
     const dbInstance = req.app.get('db')
     const {sub} = req.session.user
     const {item, id, list} = req.body
-    let completedList = list + '_comp'
-    dbInstance.addtodo([sub, item, completedList]).then(() => {
+    dbInstance.completetodo([sub, item, list]).then(() => {
         dbInstance.deletetodo([sub, id, list]).then(() => {
             res.sendStatus(200)
         })

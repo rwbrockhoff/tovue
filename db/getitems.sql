@@ -1,2 +1,3 @@
-select list, items from todolist
-where user_id=$1;
+select list, items, itemscompleted from todolist
+where user_id=$1
+order by id;
