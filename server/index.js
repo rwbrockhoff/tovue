@@ -103,6 +103,15 @@ app.put('/api/completetodo', (req, res) => {
     })
 })
 
+app.put('/api/addlist', (req, res) => {
+    const dbInstance = req.app.get('db')
+    const {sub} = req.session.user
+    const {newlist} = req.body
+    dbInstance.addlist([sub, newlist, '{}', '{}']).then((response) => {
+        res.status(200).send(response)
+    })
+})
+
 const SERVER_PORT = process.env.SERVER_PORT || 3002;
 app.listen(SERVER_PORT, () => {
     console.log(`Server listening: ${SERVER_PORT}`)

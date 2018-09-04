@@ -10,24 +10,49 @@
           class='listmenuitem'> {{item}} </p> 
      
     </div>
-    <div class='footerbar'>
-        <img class='folder' src='../assets/folder.svg'/>
+    <div class='footerbar' >
+        <!-- Button trigger modal -->
+<button type="button" class='addlistbutton' data-toggle="modal" data-target="#addlistmodal">
+  <img class='folder' src='../assets/folder.svg'/>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addlistmodal" tabindex="-1" role="dialog" aria-labelledby="addlistmodalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add A List</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" v-model='newlist'>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button @click='addlist' type="button" class="btn btn-primary">Add List</button>
+      </div>
+    </div>
+  </div>
+</div>
     </div>
     
     </div>
 </template>
-
 <script>
 import {mapState, mapMutations} from 'vuex'
+import axios from 'axios'
 export default {
     name: 'Sidebar',
     data(){
         return {
-            displayLists: []
+            displayLists: [],
+            newlist: ''
         }
     },
     computed: ([
-        'sidebarList'
+        'sidebarList', 'lists'
     ]),
     methods: {
         ...mapMutations([
@@ -35,6 +60,16 @@ export default {
     ]),
         changelist: function(item){
             this.CHANGE_LIST(item)
+        },
+        addlist: function(){
+            axios.put('/api/addlist', {newlist: this.newlist}).then((response) => {
+                console.log('res', response.data[0])
+                this.$store.state.sidebarList.push(this.newlist)
+                this.$store.state.lists[response.data[0].list] = response.data[0].items
+                this.$store.state.complists[response.data[0].list] = response.data[0].itemscompleted
+            })
+            $('#addlistmodal').modal('hide')
+            
         }
     },
     props: ['user']
@@ -100,9 +135,23 @@ div.footerbar {
     justify-content: center;
     align-items: center;
 }
+div.footerbar:hover {
+    height: 60px;
+}
+
+div.footerbar:hover img.folder {
+    width:30px;
+}
 img.folder {
     width: 20px;
-    margin-right: 10px;
+}
+button.addlistbutton {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: #f2f1f1;
+
 }
 
 
