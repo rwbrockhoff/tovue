@@ -7,7 +7,9 @@
     <div class='lists' v-for='(item, index) in this.$store.state.sidebarList' :key='index'>
       
           <p @click='changelist(item)'
-          class='listmenuitem'> {{item}} </p> 
+          class='listmenuitem'> 
+          {{item}} </p> 
+                 
      
     </div>
     <div class='footerbar' >
@@ -64,12 +66,13 @@ export default {
         addlist: function(){
             axios.put('/api/addlist', {newlist: this.newlist}).then((response) => {
                 console.log('res', response.data[0])
-                this.$store.state.sidebarList.push(this.newlist)
+                this.$store.state.sidebarList.push(response.data[0].list)
                 this.$store.state.lists[response.data[0].list] = response.data[0].items
                 this.$store.state.complists[response.data[0].list] = response.data[0].itemscompleted
+
             })
             $('#addlistmodal').modal('hide')
-            
+            this.newlist = ''
         }
     },
     props: ['user']
@@ -80,6 +83,8 @@ export default {
 div.sidecontainer {
     width: 15vw;
     height: 100vh;
+    max-height: 100vh;
+    overflow-y: scroll;
     margin-top: -3vh;
     margin-left: -3vw;
     opacity: 100;
@@ -113,7 +118,8 @@ p.listmenuitem {
     margin: -15px 0px;
     display: flex;
     justify-content: center;
-    align-items: center;   
+    align-items: center;  
+    
 }
 
 p.add {

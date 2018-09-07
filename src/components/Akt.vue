@@ -1,6 +1,9 @@
 <template>
 <div class='outerakt'>
   <div id="akt">
+    <div class='header'>
+      <h2>{{displayName}}</h2>
+    </div>
     <Input @clicked='add'/>
     <List @clicked='handle' :completed='completed'/>
     </div>
@@ -107,6 +110,23 @@ div.outerkt {
   right: 0;
   top: 5px;
    overflow-y: scroll;
+}
+div.header {
+  padding: 10px 0px;
+  color: white;
+  text-align: left;
+  padding-left: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+div.header button {
+  margin-right: 50px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2em;
 }
 
 
