@@ -8,7 +8,12 @@
       
           <p @click='changelist(item)'
           class='listmenuitem'> 
-          {{item}} </p> 
+          {{item}} 
+          <span class="count badge badge-light">{{ lists[item].length }}</span>
+          </p> 
+
+          
+           
                  
      
     </div>
@@ -45,6 +50,7 @@
 <script>
 import {mapState, mapMutations} from 'vuex'
 import axios from 'axios'
+
 export default {
     name: 'Sidebar',
     data(){
@@ -53,7 +59,7 @@ export default {
             newlist: ''
         }
     },
-    computed: ([
+    computed: mapState([
         'sidebarList', 'lists'
     ]),
     methods: {
@@ -64,8 +70,8 @@ export default {
             this.CHANGE_LIST(item)
         },
         addlist: function(){
+            
             axios.put('/api/addlist', {newlist: this.newlist}).then((response) => {
-                console.log('res', response.data[0])
                 this.$store.state.sidebarList.push(response.data[0].list)
                 this.$store.state.lists[response.data[0].list] = response.data[0].items
                 this.$store.state.complists[response.data[0].list] = response.data[0].itemscompleted
@@ -109,17 +115,28 @@ div.userbar {
 }
 
 div.lists {
-    margin-top: 15px;
+    margin-top: 30px;
+    display: flex;
+    
 }
 p.listmenuitem {
     width: 100%;
-    height: 50px;
+    height: 60px;
     font-weight: 700;
     margin: -15px 0px;
+    margin-left: 35px;
     display: flex;
-    justify-content: center;
-    align-items: center;  
-    
+    justify-content: left;
+    align-items: center;   
+}
+
+span.count {
+    position: absolute;
+    left: 170px;
+}
+
+div.group {
+    margin-right: 10px;
 }
 
 p.add {
@@ -129,6 +146,7 @@ p.add {
 p.listmenuitem:hover {
     background: #f2f1f1;
 }
+
 
 div.footerbar {
     bottom: 0;
@@ -157,7 +175,6 @@ button.addlistbutton {
     border: none;
     outline: none;
     background: #f2f1f1;
-
 }
 
 

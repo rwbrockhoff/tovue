@@ -3,7 +3,13 @@
   <div id="akt">
     <div class='header'>
       <h2>{{displayName}}</h2>
+        <div class='menuitems'>
+           <i class="far fa-star"/> 
+          <i class="far fa-trash-alt"/> 
+         </div>
+           
     </div>
+    
     <Input @clicked='add'/>
     <List @clicked='handle' :completed='completed'/>
     </div>
@@ -28,6 +34,7 @@ export default {
     return {
       user: {},
       completed: [],
+      toggleMenu: false
     }
   },
   computed: mapState([
@@ -74,7 +81,10 @@ export default {
           this.deleteItem(id)
         })
       }
-    }
+    },
+    togglemenu(){
+      this.toggleMenu = !this.toggleMenu
+    },
   },
   components: {
     Input, List, Sidebar
@@ -121,13 +131,33 @@ div.header {
   align-items: center;
 }
 
-div.header button {
-  margin-right: 50px;
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 1.2em;
+
+
+div.header i {
+  margin-right: 60px;
 }
+
+div.menuitems {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100px;
+  background: white; opacity: 0.8;
+  margin-right: 60px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+div.menuitems i {
+  margin-right: 0px;
+  padding: 10px 20px;
+  color: black;
+}
+div.menuitems i:hover {
+  background: #f0efef;
+
+
+}
+
+
 
 
 
