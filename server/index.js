@@ -84,12 +84,23 @@ app.delete('/api/:list/:id', (req, res) => {
     const dbInstance = req.app.get('db')
     const {sub} = req.session.user
     const {list, id} = req.params
-
+    
     dbInstance.deletetodo([sub, id, list]).then(() => {
         res.sendStatus(200)
     })
     
     
+})
+
+app.delete('/api/deletelist', (req, res) => {
+    const dbInstance = req.app.get('db')
+    const {sub} = req.session.user
+    const {listid} = req.query
+    dbInstance.deletelist([sub, listid]).then(resp => {
+        res.sendStatus(200)
+    }).catch(error => {
+        console.log('error: ', error)
+    })
 })
 
 app.put('/api/completetodo', (req, res) => {  

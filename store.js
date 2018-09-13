@@ -10,7 +10,8 @@ export default new Vuex.Store ({
         displayList: {},
         displayCompleted: {},
         displayName: '',
-        sidebarList: []
+        sidebarList: [],
+        idList: []
     },
     mutations: {
         ADD_ITEM: (state, item) => {
@@ -23,8 +24,10 @@ export default new Vuex.Store ({
             payload.forEach((element, index) => {
                 let name = element.list
                 let load = element.items
+                let id = element.id
                 let compload = element.itemscompleted
                 state.lists[name] = load
+                state.lists[name].id = id
                 state.complists[name] = compload
                 state.sidebarList.push(name)
             })
@@ -40,6 +43,18 @@ export default new Vuex.Store ({
         COMPLETE_ITEM: (state, payload) => {
             state.displayList.splice(payload.id, 1)
             state.displayCompleted.push(payload.item)
+        },
+        DELETE_LIST: (state, payload) => {
+        //    delete state.lists[payload]
+
+        //    Find Index of List Name, remove from Sidebar Array
+           let index = state.sidebarList.indexOf(payload)
+           state.sidebarList.splice(index, 1)
+
+        //    Update UI to Inbox List
+           state.displayList = state.lists['inbox']
+           state.displayCompleted = state.complists['inbox']
+           state.displayName = 'inbox'
         }
     },
     actions: {

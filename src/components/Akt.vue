@@ -5,8 +5,10 @@
       <h2>{{displayName}}</h2>
         <div class='menuitems'>
            <i class="far fa-star"/> 
-          <i class="far fa-trash-alt"/> 
+          <i class="far fa-trash-alt" data-toggle="modal" data-target="#exampleModalCenter"/> 
          </div>
+
+         
            
     </div>
     
@@ -17,6 +19,28 @@
     <Sidebar :user='user'/>
     
     </div>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete {{displayName}} list?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button 
+        @click='deletelistlocal'
+        type="button" class="btn btn-danger"
+        >Delete {{displayName}}</button>
+      </div>
+    </div>
+  </div>
+</div>
   </div>
 
 </template>
@@ -38,17 +62,21 @@ export default {
     }
   },
   computed: mapState([
-    'displayList', 'displayName'
+    'displayList', 'displayName', 'lists'
   ]),
   methods: {
     ...mapMutations([
-      'ADD_LIST', 'DELETE_ITEM', 'COMPLETE_ITEM'
+      'ADD_LIST', 'DELETE_ITEM', 'COMPLETE_ITEM', 'DELETE_LIST'
     ]),
     addList: function(list){
       this.ADD_LIST(list)
     },
     deleteItem: function(id){
       this.DELETE_ITEM(id)
+    },
+
+    deleteList: function(id){
+      this.DELETE_LIST(id)
     },
     completeItem: function(obj){
       this.COMPLETE_ITEM(obj)
@@ -57,6 +85,15 @@ export default {
       this.list.push({todo: item.item})
       axios.post("/api/addtodo", {item: item.item})
   
+    },
+    deletelistlocal(){
+      let listid = this.lists[this.displayName].id
+      
+      axios.delete(`/api/deletelist?listid=${listid}`).then(() => {
+        this.deleteList(listid)
+        $('#exampleModalCenter').modal('hide')
+      })
+
     },
     handle(obj){
       if(obj.val.index >= 0){

@@ -159,13 +159,7 @@ div.footerbar {
     justify-content: center;
     align-items: center;
 }
-div.footerbar:hover {
-    height: 60px;
-}
 
-div.footerbar:hover img.folder {
-    width:30px;
-}
 img.folder {
     width: 20px;
 }
@@ -175,6 +169,10 @@ button.addlistbutton {
     border: none;
     outline: none;
     background: #f2f1f1;
+}
+
+button.addlistbutton:hover {
+    background: #dddddd;
 }
 
 
