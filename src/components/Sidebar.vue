@@ -5,13 +5,13 @@
      Hi, {{user.given_name}}
     </div>
     <div class='lists' v-for='(item, index) in this.$store.state.sidebarList' :key='index'>
-        <div class='listmenu'>
+      
           <p @click='changelist(item)'
-          class='listitem'> 
+          class='listmenuitem'> 
           {{item}} 
           <span class="count badge badge-light">{{ lists[item].length }}</span>
           </p> 
-        </div>
+
           
            
                  
@@ -118,14 +118,13 @@ div.lists {
     margin-top: 30px;
     display: flex;
     
-    
 }
-div.listmenu {
-    width: 500px;
+p.listmenuitem {
+    width: 100%;
     height: 60px;
     font-weight: 700;
     margin: -15px 0px;
-    
+    padding-left: 35px;
     display: flex;
     justify-content: left;
     align-items: center;   
