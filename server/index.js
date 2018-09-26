@@ -39,9 +39,7 @@ app.get('/auth/callback', async (req, res) => {
         // req.headers.host
     //----get token---//
     
-        let receiveToken = await axios.post(`https://${process.env.VUE_APP_AUTH0_DOMAIN}/oauth/token`, payload).catch(error => {
-            console.log('error: ', error)
-        })
+        let receiveToken = await axios.post(`https://${process.env.VUE_APP_AUTH0_DOMAIN}/oauth/token`, payload)
   
     //----exchange token---//
     
@@ -98,8 +96,6 @@ app.delete('/api/deletelist', (req, res) => {
     const {listid} = req.query
     dbInstance.deletelist([sub, listid]).then(resp => {
         res.sendStatus(200)
-    }).catch(error => {
-        console.log('error: ', error)
     })
 })
 
