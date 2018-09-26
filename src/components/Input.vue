@@ -39,7 +39,6 @@ export default {
             let list = this.$store.state.displayName
             let item = this.item
             axios.post("/api/addtodo", {item: item, list: list}).then(() => {
-                console.log('itema: ', item)
                 this.ADD_ITEM(item)
             })
             this.item = ''
