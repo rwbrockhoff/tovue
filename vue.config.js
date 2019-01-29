@@ -1,16 +1,16 @@
 module.exports = {
-    devServer: {
-      proxy: {
-        '/api': {
-          target: 'http://localhost:3002',
-          ws: true,
-          changeOrigin: true
-        },
-        '/auth/callback': {
-          target: 'http://localhost:3002',
-          ws: true,
-          changeOrigin: true
-        }
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3002',
+        ws: true,
+        changeOrigin: true
+      },
+      '/auth/callback': {
+        target: 'http://localhost:3002',
+        ws: true,
+        changeOrigin: true
       }
     }
   }
+}

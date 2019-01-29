@@ -1,25 +1,22 @@
 <template>
   <div id="app">
-     
     <router-view/>
   </div>
 </template>
 
 <script>
 // Code is missing export
-export default {
-    
-}
+export default {};
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css?family=Sarabun:400,600");
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "Sarabun", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  padding: 3vh 2vw;
-  background-image: linear-gradient(#F0A202, #F55);
+  background-image: linear-gradient(#f0a202, #f55);
   height: 100vh;
   max-height: 100vh;
 }

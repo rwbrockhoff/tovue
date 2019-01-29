@@ -1,184 +1,195 @@
 <template>
-    <div class='sidecontainer'>
-    <div class='userbar'>
-     <img class="profilepic" v-if='user.sub' :src='user.picture'/>
-     Hi, {{user.given_name}}
+  <div :class="toggleSidebar ? 'inca' : 'side-container'">
+    <div class="userbar">
+      <img class="profilepic" v-if="user.sub" :src="user.picture">
+      Hi, {{user.given_name}}
     </div>
-    <div class='lists' v-for='(item, index) in this.$store.state.sidebarList' :key='index'>
-      
-          <p @click='changelist(item)'
-          class='listmenuitem'> 
-          {{item}} 
-          <span class="count badge badge-light">{{ lists[item].length }}</span>
-          </p> 
-
-          
-           
-                 
-     
+    <div class="lists" v-for="(item, index) in this.$store.state.sidebarList" :key="index">
+      <p @click="changelist(item)" class="listmenuitem">
+        {{item}}
+        <span class="count badge badge-light">{{ lists[item].length }}</span>
+      </p>
     </div>
-    <div class='footerbar' >
-        <!-- Button trigger modal -->
-<button type="button" class='addlistbutton' data-toggle="modal" data-target="#addlistmodal">
-  <img class='folder' src='../assets/folder.svg'/>
-</button>
+    <div class="footerbar">
+      <!-- Button trigger modal -->
+      <button type="button" class="addlistbutton" data-toggle="modal" data-target="#addlistmodal">
+        <img class="folder" src="../assets/folder.svg">
+      </button>
 
-<!-- Modal -->
-<div class="modal fade" id="addlistmodal" tabindex="-1" role="dialog" aria-labelledby="addlistmodalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Add A List</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-         <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" v-model='newlist'>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button @click='addlist' type="button" class="btn btn-primary">Add List</button>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="addlistmodal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="addlistmodalTitle"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Add A List</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input
+                type="text"
+                class="form-control"
+                aria-label="Small"
+                aria-describedby="inputGroup-sizing-sm"
+                v-model="newlist"
+              >
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button @click="addlist" type="button" class="btn btn-primary">Add List</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-    </div>
-    
-    </div>
 </template>
 <script>
-import {mapState, mapMutations} from 'vuex'
-import axios from 'axios'
+import { mapState, mapMutations } from "vuex";
+import axios from "axios";
 
 export default {
-    name: 'Sidebar',
-    data(){
-        return {
-            displayLists: [],
-            newlist: ''
-        }
+  name: "Sidebar",
+  data() {
+    return {
+      displayLists: [],
+      newlist: ""
+    };
+  },
+  computed: mapState(["sidebarList", "lists"]),
+  methods: {
+    ...mapMutations(["CHANGE_LIST"]),
+    changelist: function(item) {
+      this.CHANGE_LIST(item);
     },
-    computed: mapState([
-        'sidebarList', 'lists'
-    ]),
-    methods: {
-        ...mapMutations([
-      'CHANGE_LIST'
-    ]),
-        changelist: function(item){
-            this.CHANGE_LIST(item)
-        },
-        addlist: function(){
-            
-            axios.put('/api/addlist', {newlist: this.newlist}).then((response) => {
-                this.$store.state.sidebarList.push(response.data[0].list)
-                this.$store.state.lists[response.data[0].list] = response.data[0].items
-                this.$store.state.complists[response.data[0].list] = response.data[0].itemscompleted
-
-            })
-            $('#addlistmodal').modal('hide')
-            this.newlist = ''
-        }
-    },
-    props: ['user']
-}
+    addlist: function() {
+      axios.put("/api/addlist", { newlist: this.newlist }).then(response => {
+        this.$store.state.sidebarList.push(response.data[0].list);
+        this.$store.state.lists[response.data[0].list] = response.data[0].items;
+        this.$store.state.complists[response.data[0].list] =
+          response.data[0].itemscompleted;
+      });
+      $("#addlistmodal").modal("hide");
+      this.newlist = "";
+    }
+  },
+  props: ["user", "toggleSidebar"]
+};
 </script>
 
 <style>
-div.sidecontainer {
-    width: 15vw;
-    height: 100vh;
-    max-height: 100vh;
-    overflow-y: scroll;
-    margin-top: -3vh;
-    margin-left: -3vw;
-    opacity: 100;
-    background-color: #f7f5f5;
-    box-shadow: 21px 0px 47px -34px rgba(0,0,0,0.75);
-    animation: slidein 0.5s linear;
-    
+div.side-container {
+  width: 15vw;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: scroll;
+  margin-top: -3vh;
+  margin-left: -3vw;
+  opacity: 100;
+  background-color: #f7f5f5;
+  box-shadow: 21px 0px 47px -34px rgba(0, 0, 0, 0.2);
+  animation: slidein 0.5s linear;
 }
+
 img.profilepic {
   width: 30px;
   border-radius: 10px;
-margin-right: 10px;
+  margin-right: 10px;
 }
+
 div.userbar {
-    width: 100%;
-    background-color: #f2f1f1;
-    height: 7vh;
-    margin-bottom: -15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  background-color: #f2f1f1;
+  height: 7vh;
+  margin-bottom: -15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 div.lists {
-    margin-top: 30px;
-    display: flex;
-    
+  margin-top: 30px;
+  display: flex;
 }
+
 p.listmenuitem {
-    width: 100%;
-    height: 60px;
-    font-weight: 700;
-    margin: -15px 0px;
-    padding-left: 35px;
-    display: flex;
-    justify-content: left;
-    align-items: center;   
+  width: 100%;
+  height: 60px;
+  font-weight: 700;
+  margin: -15px 0px;
+  padding-left: 35px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  position: relative;
 }
 
 span.count {
-    position: absolute;
-    left: 170px;
+  position: absolute;
+  right: 20px;
 }
 
 div.group {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 p.add {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 p.listmenuitem:hover {
-    background: #f2f1f1;
+  background: #f2f1f1;
 }
 
-
 div.footerbar {
-    bottom: 0;
-    height: 40px;
-    width: 15vw;
-    position: absolute;
-    background: #f2f1f1;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  bottom: 0;
+  height: 40px;
+  width: 15vw;
+  position: absolute;
+  background: #f2f1f1;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 img.folder {
-    width: 20px;
+  width: 20px;
 }
 button.addlistbutton {
-    width: 100%;
-    height: 100%;
-    border: none;
-    outline: none;
-    background: #f2f1f1;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: #f2f1f1;
 }
 
 button.addlistbutton:hover {
-    background: #dddddd;
+  background: #dddddd;
 }
-
 
 @keyframes slidein {
-  from {margin-left: -30vw; opacity: 0}
-  to {margin-left: -3vw; opacity: 1}
+  from {
+    margin-left: -30vw;
+    opacity: 0;
+  }
+  to {
+    margin-left: -3vw;
+    opacity: 1;
+  }
 }
 
+@media (max-width: 576px) {
+  div.side-container {
+    transform: translateX(-100%);
+  }
+}
 </style>
