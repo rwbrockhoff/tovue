@@ -23,7 +23,7 @@ export default {
 
 <style scoped>
 div.start {
-  height: 100vh;
+  height: 80vh;
   width: 100%;
   display: flex;
   justify-content: center;

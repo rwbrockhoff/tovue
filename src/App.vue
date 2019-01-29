@@ -19,5 +19,6 @@ export default {};
   background-image: linear-gradient(#f0a202, #f55);
   height: 100vh;
   max-height: 100vh;
+  padding: 3vh 2vw;
 }
 </style>
